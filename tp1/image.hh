@@ -1,4 +1,4 @@
-
+#include <algorithm>
 
 class image
 {
@@ -67,6 +67,7 @@ public:
 	image& operator=(const image& m){
 		i_=m.i();
 		j_=m.j();
+		data_ = new int[i_*j_];
 		for(int i=0;i<i_*j_;i++){
 			data_[i] = m[i];
 		}
@@ -80,6 +81,16 @@ public:
 		for (int i=0;i<i_*j_;i++){
 			data_[i] = a;
 		}
+	}
+
+	std::vector<int> values(){
+		std::vector<int> vec;
+		for(int i=0;i<i_*j_;i++){
+			if(find(vec.begin(), vec.end(), data_[i]) == vec.end()){
+				vec.push_back(data_[i]);
+			}
+		}
+		return vec;
 	}
 
 	void affiche(){
