@@ -1,12 +1,22 @@
 #include <cassert>
 
-class vector : public truc
+class abstract_vector
+{
+
+};
+
+
+class vector : public abstract_vector
 {
 private:
 	int n_;
 	int* data_;
 
 public:
+	vector(){
+		n_=0;
+		data_=0;
+	};
 	int dim(){
 		return n_;
 	};
@@ -29,7 +39,6 @@ public:
 	};
 
 	vector(const vector& v){
-		n_ = v.dim();
 		data_ = new int[n_];
 		for(int i=0;i<n_;i++){
 			data_[i] = v.data()[i];
@@ -48,6 +57,7 @@ public:
 	};
 
 	vector& operator=(const vector& v2){
+		n_=v2.dim();
 		for(int i=0;i<n_;i++){
 			data_[i] = v2[i];
 		}
