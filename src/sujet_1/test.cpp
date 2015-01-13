@@ -4,19 +4,14 @@
 #include <cstdlib>
 #include <queue>
 #include <vector>
-template <typename T>
-class test
-{
-public:
-	test();
-	~test();
-	bool test1(T a);
-};
+#include <string>
 
 int main(int argc, char const *argv[])
 {
-	test<int>::test1(int a){
-		return a;
-	};
+	std::string s1, s2;
+	s1 = "youpi";
+	s2 = "you";
+	bool b = s1>s2;
+	std::cout << b <<std::endl;
 	return 0;
 }

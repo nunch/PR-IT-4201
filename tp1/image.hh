@@ -9,19 +9,58 @@ class image
 private:
 	unsigned i_;
 	unsigned j_;
-	T* data_;
+	std::vector<T> data_;
+	T test;
+	T isNull;
+	int max;
 public:
+
+	void setMax(int t){
+		max = t;
+	};
+
+	int getMax(){
+		return max;
+	};
+
+	void setIsNull(T t){
+		isNull = t;
+		for(int i=0;i<i_*j_;i++){
+			data_.push_back(isNull);
+		}
+	};
+
+	T getIsNull() const{
+		return isNull;
+	};
+
+	T& getIsNull(){
+		return isNull;
+	};
+
+	bool isOk(T t){
+		return test == t;
+	};
+
+	void setTest(T t) {
+		test = t;
+	};
+
+	T getTest(){
+		return test;
+	};
 	
 	image(unsigned i, unsigned j){
 		i_ = i;
 		j_ = j;
-		data_ = (T*) malloc(i_*j_*sizeof(T));
+		//data_ = (T*) malloc(i_*j_*sizeof(T));
 	};
 
 	image(const image<T>& m){
 		i_ = m.i();
 		j_ = m.j();
-		data_ = (T*) malloc(i_*j_*sizeof(T));
+		//data_ = (T*) malloc(i_*j_*sizeof(T));
+		setIsNull(m.getIsNull());
 		for(unsigned i=0;i<i_*j_;i++){
 			data_[i] = m[i];
 		}
@@ -52,13 +91,6 @@ public:
 	 
 	    return data_[i*j_+j];
 	};
-/*
-	int& operator[](const point2d t){
-		assert(t.i >= 0 && t.i  < i_);
-	    assert(t.j  >= 0 && t.j < j_);
-	 
-	    return data_[t.i*j_+t.j];
-	};*/
 
 	unsigned i()const{return i_;};
 	unsigned j()const{return j_;};
@@ -77,7 +109,7 @@ public:
 	image<T>& operator=(const image<T>& m){
 		i_=m.i();
 		j_=m.j();
-		data_ = new T[i_*j_];
+		//data_ = new T[i_*j_];
 		for(int i=0;i<i_*j_;i++){
 			data_[i] = m[i];
 		}
@@ -96,7 +128,7 @@ public:
 	std::vector<T> values(){
 		std::vector<T> vec;
 		for(int i=0;i<i_*j_;i++){
-			if(data_[i]!=0 && find(vec.begin(), vec.end(), data_[i]) == vec.end()){
+			if(data_[i]!=isNull && find(vec.begin(), vec.end(), data_[i]) == vec.end()){
 				vec.push_back(data_[i]);
 			}
 		}
