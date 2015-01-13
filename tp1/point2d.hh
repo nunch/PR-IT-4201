@@ -13,6 +13,10 @@ public:
 	void affiche(){
 		std::cout << "i = " << i << "\tj = "<< j <<std::endl;
 	};
+
+	bool operator==(point2d p){
+		return i==p.i && j==p.j;
+	}
 	unsigned i;
 	unsigned j;
 	

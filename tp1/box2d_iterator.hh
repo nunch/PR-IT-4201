@@ -1,8 +1,7 @@
-template <typename T>
 class box2d_iterator
 {
 public:
-	box2d_iterator(box2d<T>& d){
+	box2d_iterator(box2d& d){
 		current = 0;
 		begin=0;
 		end = d.getLast();
@@ -23,7 +22,7 @@ public:
 	void start(){current=0;};
 	
 private:
-	box2d<T> dom;
+	box2d dom;
 	unsigned current;
 	unsigned begin;
 	unsigned end;

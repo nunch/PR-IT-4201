@@ -26,6 +26,12 @@ public:
 			data_[i] = m[i];
 		}
 	};
+
+	box2d domain(){
+		box2d b(point2d(0,0),point2d(i_,j_));
+		return b;
+	}
+
 	
 	T& operator()(const int i, const int j){
 		assert(i >= 0 && i < i_);

@@ -1,9 +1,7 @@
-#include "box2d.hh"
-template <typename T>
 class neighb2diterator
 {
 public:
-	neighb2diterator(image<T> im, unsigned i, unsigned j, unsigned dim){
+	neighb2diterator(unsigned i, unsigned j, unsigned dim){
 		assert(i<dim);
 		assert(i>=0);
 		assert(j<dim);
@@ -65,7 +63,7 @@ public:
 	};
 
 
-	neighb2diterator(image<T> im, point2d p, unsigned dim){
+	neighb2diterator(point2d p, unsigned dim){
 		//std::cout << "neighb2diterator " << p.i << " " << p.j << std::endl;
 		int i = p.i;
 		int j = p.j;
@@ -129,7 +127,7 @@ public:
 		}
 	};
 
-	neighb2diterator(image<T> im, point2d p, unsigned dimI, unsigned dimJ){
+	neighb2diterator(point2d p, unsigned dimI, unsigned dimJ){
 		//std::cout << "neighb2diterator " << p.i << " " << p.j << std::endl;
 		int i = p.i;
 		int j = p.j;
