@@ -25,9 +25,7 @@ public:
 
 	void setIsNull(T t){
 		isNull = t;
-		for(int i=0;i<i_*j_;i++){
-			data_.push_back(isNull);
-		}
+		if(data_.size()==0) for(int i=0;i<i_*j_;i++) data_.push_back(isNull);
 	};
 
 	T getIsNull() const{

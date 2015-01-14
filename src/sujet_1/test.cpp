@@ -8,10 +8,9 @@
 
 int main(int argc, char const *argv[])
 {
-	std::string s1, s2;
-	s1 = "youpi";
-	s2 = "you";
-	bool b = s1>s2;
+	std::vector<int> truc;
+	truc.push_back(1);
+	int b = truc.size();
 	std::cout << b <<std::endl;
 	return 0;
 }
