@@ -2,24 +2,25 @@ class box2d
 {
 public:
 	box2d(){};
-	box2d(point2d p1, point2d p2){
-		i_ = p2.i;
-		j_ = p2.j;
-		liste = new point2d[i_*j_];
+	box2d(point2d p1_, point2d p2_){
+		p1 = p1_;
+		p2 = p2_;
+		j_ = p2.j-p1.j;
+		i_ = p2.i-p1.i;
 
-		for (int i = p1.i; i < i_; ++i)
+		for (int i = p1.i; i < p2.i; ++i)
 		{
-			for (int j = p1.j; j < j_; ++j)
+			for (int j = p1.j; j < p2.j; ++j)
 			{
-				liste[i*j_+j] = point2d(i,j);
+				liste.push_back(point2d(i,j));
 			}
 		}
 	};
 	~box2d(){};
 
-	point2d* getListe(){return liste;};
+	std::vector<point2d> getListe(){return liste;};
 
-	unsigned getLast(){return i_*j_;};
+	int getLast(){return i_*j_;};
 
 	point2d& operator()(point2d p){
 		return liste[p.i*j_+p.j];
@@ -29,10 +30,11 @@ public:
 		return liste[i];
 	};
 
-	bool isIn(point2d p){
-		for (int i = 0; i < i_; ++i)
+	bool has(point2d p){
+	
+		for (int i = p1.i; i < p2.i; ++i)
 		{
-			for (int j = 0; j < j_; ++j)
+			for (int j = p1.j; j < p2.j; ++j)
 			{
 				if(liste[i*j_+j] == p) return true;
 			}
@@ -41,46 +43,9 @@ public:
 	}
 
 private:
-	point2d* liste;
-	unsigned i_;
-	unsigned j_;
+	std::vector<point2d> liste;
+	point2d p1;
+	point2d p2;
+	int i_;
+	int j_;
 };
-/*#include "point2d.hh"
-#include "image.hh"
-
-class box2d
-{
-public:
-	box2d(){};
-	box2d(image im){
-		i_ = im.i();
-		j_ = im.j();
-		liste = new point2d[i_*j_];
-
-		for (int i = 0; i < i_; ++i)
-		{
-			for (int j = 0; j < j_; ++j)
-			{
-				liste[i*j_+j] = point2d(i,j);
-			}
-		}
-	};
-	~box2d(){};
-
-	point2d* getListe(){return liste;};
-
-	unsigned getLast(){return i_*j_;};
-
-	point2d& operator()(point2d p){
-		return liste[p.i*j_+p.j];
-	};
-
-	point2d& operator[](unsigned i){
-		return liste[i];
-	};
-
-private:
-	point2d* liste;
-	unsigned i_;
-	unsigned j_;
-};*/

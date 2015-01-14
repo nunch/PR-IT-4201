@@ -17,7 +17,14 @@ public:
 	bool operator==(point2d p){
 		return i==p.i && j==p.j;
 	}
-	unsigned i;
-	unsigned j;
+
+	point2d& operator=(const point2d& m){
+		i=m.i;
+		j=m.j;
+		return *this;
+	};
+
+	int i;
+	int j;
 	
 };

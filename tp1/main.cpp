@@ -16,55 +16,7 @@ using namespace std;
 unsigned dim1;
 unsigned dim2;
 
-// Get the size of a file
-/*
-image<int> calcMap(image<int>& input){
-	image<int> dmap(dim1,dim2);
-	dmap.setIsNull(0);
 
-	std::queue<point2d> queue;
-	box2d dom = input.domain();
-	box2d_iterator it_dom(dom);
-
-	it_dom.start();
-	while(it_dom.hasNext()){
-		point2d p = it_dom.next();
-		dmap(p) = input.getMax();
-	}
-	
-	it_dom.start();
-	while(it_dom.hasNext()){
-		point2d p = it_dom.next();
-		if(input.isOk(input(p))){
-			dmap(p) = 0;
-			neighb2diterator it(p,dim1,dim2);
-			it.start();
-			while(it.hasNext()){
-				point2d p2 = it.next();
-				if(dom.isIn(p2) && !input.isOk(input(p2))){
-					queue.push(p);
-					break;
-				}
-			}
-		}
-	}
-
-	while(!queue.empty()){
-		point2d p = queue.front();
-		queue.pop();
-		neighb2diterator it(p, dim1,dim2);
-		it.start();
-		while(it.hasNext()){
-			point2d p2 = it.next();
-			if(dmap(p2) == input.getMax()){
-				dmap(p2) = dmap(p)+1;
-				queue.push(p2);
-			}
-		}
-	}
-
-	return dmap;
-}*/
 template <typename T>
 image<int> calcMap(image<T>& input){
 	image<int> dmap(dim1,dim2);
@@ -89,7 +41,7 @@ image<int> calcMap(image<T>& input){
 			it.start();
 			while(it.hasNext()){
 				point2d p2 = it.next();
-				if(dom.isIn(p2) && !input.isOk(input(p2))){
+				if(dom.has(p2) && !input.isOk(input(p2))){
 					queue.push(p);
 					break;
 				}
@@ -123,10 +75,7 @@ image<T> comute_dmap(image<T>& input){
 	inter.setIsNull(0);
 	inter.fill(255);
 
-	//image<int>* res = (image<int>*) malloc(values.size()*sizeof(image<int>));
 	std::vector<image<int> > truc;
-
-	int num=0;
 
 	for(int i=0;i<values.size();i++){
 		input.setTest(values[i]);
@@ -147,34 +96,10 @@ image<T> comute_dmap(image<T>& input){
 	return dmap;
 }
 
-int main(int argc, char const *argv[])
-{
-	srand (time(NULL));
-	dim1 = 10;
-	dim2 = 20;
-	image<std::string> input(dim1,dim2);
-	input.setMax(255);
-	input.setIsNull("");
-	for(int i=0;i<10;i++) {
-		input(point2d(i,4)) = "s";
-		input(point2d(i,9)) = "ss";
-		input(point2d(i,14)) = "sss";
-		input(point2d(i,19)) = "ssss";
-	}
-	//input.affiche();
-	image<std::string> dmap = comute_dmap(input);
-	//truc(input);
-	
-	//image<int> dmap = calcMap(input);
-	std::cout << "\ndmap\n" << std::endl;
-	dmap.affiche();
-	
-	return 0;
-	/*srand (time(NULL));
+void calcInt(){
 	dim1 = 10;
 	dim2 = 20;
 	image<int> input(dim1,dim2);
-	input.setMax(255);
 	input.setIsNull(0);
 	for(int i=0;i<10;i++) {
 		input(point2d(i,4)) = 1;
@@ -182,9 +107,39 @@ int main(int argc, char const *argv[])
 		input(point2d(i,14)) = 3;
 		input(point2d(i,19)) = 4;
 	}
+
+	input.affiche();
+
 	image<int> dmap = comute_dmap(input);
-	//image<int> dmap = calcMap(input);
 	std::cout << "\ndmap\n" << std::endl;
 	dmap.affiche();
-	return 0;*/
+
+	std::cout << "\n\n\n";
+}
+
+void calcString(){
+	dim1 = 10;
+	dim2 = 20;
+	image<std::string> input(dim1,dim2);
+	input.setMax(255);
+	input.setIsNull("");
+	for(int i=0;i<10;i++) {
+		input(point2d(i,4)) = "a";
+		input(point2d(i,9)) = "b";
+		input(point2d(i,14)) = "c";
+		input(point2d(i,19)) = "d";
+	}
+
+	input.affiche();
+
+	image<std::string> dmap = comute_dmap(input);
+	std::cout << "\ndmap\n" << std::endl;
+	dmap.affiche();
+}
+
+int main(int argc, char const *argv[])
+{
+	calcInt();
+	calcString();
+	return 0;
 }
