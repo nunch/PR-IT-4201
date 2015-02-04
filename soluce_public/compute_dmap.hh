@@ -31,8 +31,8 @@ namespace my
   	  for (n.start(); n.is_valid(); n.next())
   	    if (D.has(n) and input(n) == false)
   	      {
-  		q.push(p);
-  		break;
+        		q.push(p);
+        		break;
   	      }
   	}
 

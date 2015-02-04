@@ -42,40 +42,62 @@ int main()
   // 0 0 0 0 0 
   // 2 0 0 0 0 
 
-  image_if<image2d<int>, image2d<unsigned int> > image = make_image_if(lab, msk);
+  image_if<image2d<unsigned>, image2d<bool_t> > image = make_image_if(lab, msk);
   fancy_print(image, b);
   // gives:
   //
-  //         0 
-  // 1 0 0 0   
-  //       0 0 
-  // 2 0 0   0 
+  //         0
+  // 1 0 0 0  
+  //       0 0
+  // 2 0 0   0
 
-/*
+
   {
     image2d<unsigned> dmap = compute_dmap__v2(lab);
     dmap.debug_print();
     // gives:
-    //
-    // 1 2 3 4 5 
-    // 0 1 2 3 4 
-    // 1 2 3 4 5 
-    // 0 1 2 3 4 
+    // 
+    // 1 2 3 4 5
+    // 0 1 2 3 4
+    // 1 2 3 4 5
+    // 0 1 2 3 4
+
 
     // THIS RESULT IS CORRECT BUT...  THIS IS *NOT* WHAT WE WANT!  :-(
 
-    fancy_print( make_image_if(dmap, msk), b );
+    //fancy_print( make_image_if(dmap, msk), b );
+    image_if<image2d<unsigned>, image2d<bool_t> > image2 = make_image_if(dmap, msk);
+    //fancy_print(image2.getF(),image2.getF().domain());
+    //image = make_image_if(dmap, msk)
+    fancy_print(image2,b);
+
+    //fancy_print(image2.getIma(),b);
+    //fancy_print(dmap,b);
+
+
+    //std::cout << "msk\n" << image2.getF()*/msk << std::endl;
+    //std::cout << image2.getF() << std::endl;
+    //std::cout << image << std::endl;
     // gives:
     //
     //         5 
     // 0 1 2 3   
     //       4 5 
     // 0 1 2   4 
-
-
+    //std::cout << msk << std::endl;
+    //std::cout << image.domain() << std::endl;
+    //domaine_if<box2d,image2d<bool_t> > d(image.domain());
+    //domaine_if_iterator<box2d,image2d<bool_t> > p(d);
+    //std::cout << image.getF()<< std::endl;
+    
     // WE WANT TO COMPUTE THE DISTANCE MAP *WITHIN* THE MASK:
-
-    fancy_print( compute_dmap__v2(make_image_if(lab, msk)), b );
+    //compute_dmap__COMPUTE THE DISTANCE MAP *WITHIN* THE MASK:
+    //compute_dmap__COMPUTE THE DISTANCE MAP *WITHIN* THE MASK:
+    //compute_dmap__v2v2COMPUTE THE DISTANCE MAP *WITHIN* THE MASK:
+    //compute_dmap__v2v2(make_image_if(lab, msk));
+    //fancy_print(lab,b);
+    //fancy_print(msk,b);
+    fancy_print( compute_dmap__v2v2(make_image_if(lab, msk)), b );
     // gives:
     //
     //         4294967295 <- this value is MAX, i.e., unsigned(-1)
@@ -89,9 +111,9 @@ int main()
 
   {
     helper f(lab);
-    image2d<unsigned> dmap = compute_dmap__v2(make_image_if(lab, msk), f).remove_if();
+    fancy_print(compute_dmap__v2(make_image_if(lab, msk),f),b);//, f);//.remove_if();
 
-    dmap.debug_print();
+    //dmap.debug_print();
     // gives:
     //
     // 0 0 0 0 4294967295 
@@ -114,6 +136,7 @@ int main()
     // (1,0) (1,0) (1,1) (1,2) (1,4) 
     // (2,0) (2,1) (2,2) (1,3) (2,3) 
     // (3,0) (3,0) (3,1) (3,3) (2,4) 
+    f.next.debug_print();
   }
-*/
+
 }
