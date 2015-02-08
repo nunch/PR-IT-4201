@@ -70,7 +70,8 @@ namespace my
 			p_ = dom.pmin();
 			if(fon(p_) == 0) next();
 			//std::cout << p_ << "truc de ouf de merde " << (fon(point2d(3,4))==1 && dom.has(point2d(3,4))) << std::endl;
-			truc=1;
+			truc=0;
+			set=0;
 			/*
 			if(!dom.has(p_) ||fon(p_) == false) {
 				std::cout << "fuck it" <<std::endl;
@@ -82,10 +83,11 @@ namespace my
 		bool is_valid(){
 			typename D::point_type p = p_;
 			//std::cout << "super point " << p << std::endl;
-			if(truc==1){
+			/*if(truc==1){
 				truc=0;
 				return 1;
-			}
+			}*/
+			if(set==1) return 0;
 			while(p.row <= dom.pmax().row){
 				//std::cout << "super point de merde " << p << " et le point de chiotte " << p_ << std::endl;
 				p.col += 1;
@@ -97,12 +99,16 @@ namespace my
 				if(dom.has(p) && fon(p) == 1) return 1;
 				//std::cout << "point " << p << std::endl;
 			}
-			
-
+			truc++;
+			if(truc%2==1) {
+				set=1;
+				return 1;
+			}
 			return 0;
 		}
 
 		void next(){
+			if(set==1) return;
 			if (not is_valid())	std::abort();
 			p_.col += 1;
 			if (p_.col > dom.pmax().col)
@@ -123,6 +129,7 @@ namespace my
 		F& fon;
 		typename D::point_type p_;
 		int truc;
+		int set;
 	};
 
 	
@@ -210,12 +217,17 @@ namespace my
 		    return ima_.getData()[i];
 		}
 
+		
 
 
 		const domain_type& domain() const
 		{
 			return dom.exact();
 		}
+
+		/*image2d<I>& operator=(const image_if<image2d<I>,F>& i){
+			return i.getIma();
+		}*/
 
 		const I& getIma(){return ima_;}
 		const F& getF(){return f_;}

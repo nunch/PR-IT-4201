@@ -338,6 +338,7 @@ namespace my
     image2d(const domain_type& d)
       : d_(d)
     {
+      data_.clear();
       data_.resize(d_.npoints());
     }
 
@@ -350,6 +351,10 @@ namespace my
     image2d(image2d<T>& i){
 
     }*/
+
+    const image2d<T>& getIma(){return *this;}
+
+    const image2d<T>& getIma()const{return *this;}
 
     // access to pixel values:
     T& operator()(const point_type& p)

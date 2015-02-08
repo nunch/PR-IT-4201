@@ -18,16 +18,7 @@ int main()
   debug_iota(ima);
   fancy_print(ima, b);
 
-  fancy_print(make_image_if(ima, msk),b);
   image_if<image2d<int>, image2d<bool_t> > image = make_image_if(ima, msk);
-  domaine_if<box2d,image2d<bool_t> > d(image.domain());
-  domaine_if_iterator<box2d,image2d<bool_t> > p(d);
-  //image(point2d(0,0));
-  for_all(p) {
-    std::cout << p;
-    image(p)=5;
-  }
-  std::cout << std::endl;
   fancy_print(image,b);
 
 

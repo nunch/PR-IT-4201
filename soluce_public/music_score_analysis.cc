@@ -1,4 +1,5 @@
 #include "analyze.hh"
+#include "helper.hh"
 
 
 
@@ -32,13 +33,15 @@ int main()
 	lab.fill(lab_dta);
 	lab.debug_print();
 
-	image2d<unsigned> path = analyze(lab, msk);
+	helper f(lab);
+
+	analyze(lab, f,msk);/*compute_dmap__helper(f.lab,f,msk);*///analyze(f, msk);
 	// gives:
 	//
 	// label 1:  max distance = 6,  max point = (3,4)
 	// label 2:  max distance = 2,  max point = (3,2)
 
-	path.debug_print();
+	f.iz.debug_print();
 	// gives:
 	//
 	// 0 0 0 0 0 
@@ -89,9 +92,9 @@ int main()
 	lab.fill(lab_dta);
 	lab.debug_print();
 
-	image2d<unsigned> dmap(b);
-	image2d<unsigned> origin(b);
-	image2d<unsigned> iz = analyze(lab, msk, dmap, origin);
+	helper f(lab);
+
+	image2d<unsigned> dmap = analyze(lab, f,msk);
 	// gives:
 	//
 	// label 1:  max distance = 9,  max point = (0,8)
@@ -99,9 +102,8 @@ int main()
 	// label 3:  max distance = 11,  max point = (8,8)
 	// label 4:  max distance = 8,  max point = (10,8)
 
-	origin.debug_print();
 
-	dmap.debug_print();
+	f.iz.debug_print();
 	// gives:
 	//
 	// 0 0 0 0 1 1 1 1 1
@@ -115,8 +117,9 @@ int main()
 	// 0 0 0 0 0 0 3 3 3
 	// 0 0 0 0 0 0 0 0 0
 	// 4 4 4 4 4 4 4 4 4
-
-
+	box2d_iterator p(dmap.domain());
+	for_all(p) if(dmap(p)==-1) dmap(p) = 0;
+	dmap.debug_print();
 
 	// For this example, we have:
 

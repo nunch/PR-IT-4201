@@ -12,7 +12,8 @@ int main()
 
   box2d b(4, 5);
 
-  bool_t msk_dta[]   = {0, 0, 0, 0, 1,
+  bool_t msk_dta[]   = {
+      0, 0, 0, 0, 1,
 			1, 1, 1, 1, 0,
 			0, 0, 0, 1, 1,
 			1, 1, 1, 0, 1};
@@ -97,7 +98,8 @@ int main()
     //compute_dmap__v2v2(make_image_if(lab, msk));
     //fancy_print(lab,b);
     //fancy_print(msk,b);
-    fancy_print( compute_dmap__v2v2(make_image_if(lab, msk)), b );
+    std::cout << "youppppi" << std::endl;
+    fancy_print( compute_dmap__v2(make_image_if(lab, msk)), b );
     // gives:
     //
     //         4294967295 <- this value is MAX, i.e., unsigned(-1)
@@ -111,7 +113,7 @@ int main()
 
   {
     helper f(lab);
-    fancy_print(compute_dmap__v2(make_image_if(lab, msk),f),b);//, f);//.remove_if();
+    fancy_print(compute_dmap__helper(make_image_if(lab, msk),f).getIma(),b);//, f);//.remove_if();
 
     //dmap.debug_print();
     // gives:
@@ -135,8 +137,27 @@ int main()
     // (0,0) (0,1) (0,2) (0,3) (0,4) 
     // (1,0) (1,0) (1,1) (1,2) (1,4) 
     // (2,0) (2,1) (2,2) (1,3) (2,3) 
-    // (3,0) (3,0) (3,1) (3,3) (2,4) 
-    f.next.debug_print();
+    // (3,0) (3,0) (3,1) (3,3) (2,4) */
+
   }
 
+  {
+    fancy_print( compute_dmap__v2(lab, msk), b );
+
+    // gives
+    //
+    // 4294967295 4294967295 4294967295 4294967295 4294967295
+    // 0          1          2          3          4294967295
+    // 4294967295 4294967295 4294967295 4          5
+    // 0          1          2          4294967295 6
+  }
+
+  {
+    helper h(lab);
+    fancy_print( compute_dmap__helper(lab, h, msk), b );
+
+    h.iz.debug_print();
+
+    h.prev.debug_print();
+  }
 }
